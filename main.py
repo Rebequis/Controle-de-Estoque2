@@ -31,3 +31,32 @@ def ler_arquivo(nome_arquivo):
     except FileNotFoundError:
         print('Arquivo não encontrado')
         return None
+
+
+def cadastrar_produto():
+    print("\n--- CADASTRAR PRODUTO ---")
+    nome_for = input('Nome do fornecedor: ').strip()
+    nome_pro = input('Nome do produto: ').strip()
+
+    ja_existe = False
+    for p in produtos:
+        if p['fornecedor'].lower() == nome_for.lower() and p['produto'].lower() == nome_pro.lower():
+            ja_existe = True
+            break
+
+    if ja_existe:
+        print('\n❌ Produto já cadastrado para este fornecedor!')
+    else:
+        try:
+            qtd_inicial = int(input('Quantidade inicial em estoque: '))
+        except ValueError:
+            print('Quantidade inválida! Definida como 0.')
+            qtd_inicial = 0
+
+        novo_produto = {
+            "fornecedor": nome_for,
+            "produto": nome_pro,
+            "quantidade": qtd_inicial
+        }
+        produtos.append(novo_produto)
+        print('\n✅ Produto cadastrado com sucesso!')
